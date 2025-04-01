@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router';
 import logo from '../assets/logo.png';
+import AuthContext from '../auth/AuthContext';
 
 const Navbar = () => {
+    const { user } = useContext(AuthContext)
+
     return (
         <header className='bg-white py-2'>
             <div className='max-w-5/6 mx-auto px-4'>
@@ -15,7 +18,9 @@ const Navbar = () => {
                         <Link className='font-medium text-slate-900 text-lg hover:text-slate-600' to="/task-list">
                             Task List
                         </Link>
-                        <Link className='font-medium text-slate-900 text-lg hover:text-slate-600' to="/profile">Profile</Link>
+                        {user &&
+                            <Link className='font-medium text-slate-900 text-lg hover:text-slate-600' to="/profile">{user.fullname}</Link>
+                        }
                     </div>
                 </div>
             </div>

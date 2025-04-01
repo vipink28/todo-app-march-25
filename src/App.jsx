@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
+import { AuthProvider } from './auth/AuthContext'
 import Login from './auth/Login'
 import Register from './auth/Register'
 import Navbar from './components/Navbar'
@@ -11,21 +12,24 @@ import TaskList from './pages/TaskList'
 
 
 function App() {
+
   return (
     <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path='/' element={<Navigate to="/login" />}></Route>
-        <Route path='/' element={<Home />}>
-          <Route path='login' element={<Login />}></Route>
-          <Route path='register' element={<Register />}></Route>
-        </Route>
-        <Route path='/about' element={<About />}></Route>
-        <Route path='/create-task' element={<CreateTask />}></Route>
-        <Route path='/task-list' element={<TaskList />}></Route>
-        <Route path='/profile' element={<Profile />}></Route>
-        <Route path='*' element={<PageNotFound />}></Route>
-      </Routes>
+      <AuthProvider>
+        <Navbar />
+        <Routes>
+          <Route path='/' element={<Navigate to="/login" />}></Route>
+          <Route path='/' element={<Home />}>
+            <Route path='/login' element={<Login />}></Route>
+            <Route path='/register' element={<Register />}></Route>
+          </Route>
+          <Route path='/about' element={<About />}></Route>
+          <Route path='/create-task' element={<CreateTask />}></Route>
+          <Route path='/task-list' element={<TaskList />}></Route>
+          <Route path='/profile' element={<Profile />}></Route>
+          <Route path='*' element={<PageNotFound />}></Route>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   )
 }
