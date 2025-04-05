@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import AuthContext from './AuthContext';
 
-const Login = ({ setUser }) => {
-    const navigate = useNavigate();
+const Login = () => {
+    const { login } = useContext(AuthContext);
     const [formData, setFormData] = useState(null);
     const handleChange = (e) => {
         let { name, value } = e.target;
@@ -12,21 +12,8 @@ const Login = ({ setUser }) => {
         }))
     }
 
-    const handleSubmit = async () => {
-        const response = await fetch(`http://localhost:5001/users?email=${formData.email}&password=${formData.password}`, { method: "GET" });
-        if (response.ok) {
-            const user = await response.json();
-            if (user.length > 0) {
-                alert("logged in successfully");
-                localStorage.setItem("todouser", JSON.stringify(user[0]))
-                setUser(user[0])
-                navigate("/task-list")
-            } else {
-                alert("email/password did not match")
-            }
-        } else {
-            alert("something went wrong");
-        }
+    const handleSubmit = () => {
+        login(formData)
     }
     return (
         <div className='text-slate-900'>

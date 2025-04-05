@@ -4,7 +4,8 @@ import logo from '../assets/logo.png';
 import AuthContext from '../auth/AuthContext';
 
 const Navbar = () => {
-    const { user } = useContext(AuthContext)
+    const { user, logout } = useContext(AuthContext)
+
 
     return (
         <header className='bg-white py-2'>
@@ -12,14 +13,21 @@ const Navbar = () => {
                 <div className='flex items-center'>
                     <div><img src={logo} /></div>
                     <div className='ms-auto flex items-center gap-4'>
-                        <Link className='font-medium text-slate-900 text-lg hover:text-slate-600' to="/">Home</Link>
-                        <Link className='font-medium text-slate-900 text-lg hover:text-slate-600' to="/about">About</Link>
-                        <Link className='font-medium text-slate-900 text-lg hover:text-slate-600' to="/create-task">Create Task</Link>
-                        <Link className='font-medium text-slate-900 text-lg hover:text-slate-600' to="/task-list">
-                            Task List
-                        </Link>
-                        {user &&
-                            <Link className='font-medium text-slate-900 text-lg hover:text-slate-600' to="/profile">{user.fullname}</Link>
+                        {
+                            !user ?
+                                <>
+                                    <Link className='font-medium text-slate-900 text-lg hover:text-slate-600' to="/">Home</Link>
+                                    <Link className='font-medium text-slate-900 text-lg hover:text-slate-600' to="/about">About</Link>
+                                </>
+                                :
+                                <>
+                                    <Link className='font-medium text-slate-900 text-lg hover:text-slate-600' to="/create-task">Create Task</Link>
+                                    <Link className='font-medium text-slate-900 text-lg hover:text-slate-600' to="/task-list">
+                                        Task List
+                                    </Link>
+                                    <Link className='font-medium text-slate-900 text-lg hover:text-slate-600' to="/profile">{user.fullname}</Link>
+                                    <button onClick={logout} className='font-medium cursor-pointer text-slate-900 text-lg hover:text-slate-600'>Logout</button>
+                                </>
                         }
                     </div>
                 </div>
