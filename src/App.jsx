@@ -20,6 +20,7 @@ function App() {
       <AuthProvider>
         <TaskProvider>
           <Navbar />
+
           <Routes>
             <Route path='/' element={<Navigate to="/login" />}></Route>
             <Route path='/' element={<Home />}>
@@ -32,6 +33,12 @@ function App() {
             <Route path='/profile' element={<ProtectedRoute><Profile /></ProtectedRoute>}></Route>
             <Route path='*' element={<PageNotFound />}></Route>
           </Routes>
+
+          <Routes>
+
+          </Routes>
+
+
         </TaskProvider>
       </AuthProvider>
     </BrowserRouter>

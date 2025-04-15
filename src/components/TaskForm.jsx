@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import AuthContext from '../auth/AuthContext';
 import TaskContext from '../context/TaskContext';
 
-const TaskForm = ({ isUpdate, setIsUpdate, data }) => {
+const TaskForm = ({ isUpdate, setIsUpdate, data, isPopup, closeBtn }) => {
     const init = {
         title: "",
         description: "",
@@ -22,13 +22,20 @@ const TaskForm = ({ isUpdate, setIsUpdate, data }) => {
     }
 
     useEffect(() => {
-        if (isUpdate) {
+        if (isUpdate && data) {
             setFormData(data);
         } else {
             setFormData(init);
         }
-    }, [isUpdate])
+    }, [isUpdate, data])
 
+    const handleCancel = () => {
+        if (isPopup) {
+            closeBtn.current.click();
+        } else {
+            setIsUpdate(false);
+        }
+    }
 
     return (
         <div className='py-2'>
@@ -51,7 +58,7 @@ const TaskForm = ({ isUpdate, setIsUpdate, data }) => {
                     isUpdate ?
                         <>
                             <button className='px-8 py-3 bg-slate-900 text-white rounded-lg cursor-pointe me-3' onClick={() => updateTask(formData)}>Update Task</button>
-                            <button onClick={() => { setIsUpdate(false) }} className='px-8 py-3 bg-yellow-400 text-slate-900 rounded-lg cursor-pointer'>Cancel</button>
+                            <button onClick={handleCancel} className='px-8 py-3 bg-yellow-400 text-slate-900 rounded-lg cursor-pointer'>Cancel</button>
                         </>
                         :
                         <button onClick={() => addTask(formData)} className='px-8 py-3 bg-slate-900 text-white rounded-lg cursor-pointer'>Add Task</button>
