@@ -54,7 +54,7 @@ export const TaskProvider = ({ children }) => {
             const response = await fetch(`http://localhost:5001/tasks/${id}`, config);
             getAllTasks(user.id)
             alert("Task Deleted successfully");
-            
+
         } catch (error) {
             alert(error.message);
         }
